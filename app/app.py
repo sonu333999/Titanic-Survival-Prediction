@@ -24,7 +24,7 @@ h1, h2, h3 {
 """, unsafe_allow_html=True)
 
 # ---------------- Load Model ----------------
-model = joblib.load('../models/titanic_model.pkl')
+model = joblib.load('/models/titanic_model.pkl')
 
 # ---------------- Title ----------------
 st.markdown("<h1 style='text-align:center;'>🚢 Titanic Survival AI Predictor</h1>", unsafe_allow_html=True)
