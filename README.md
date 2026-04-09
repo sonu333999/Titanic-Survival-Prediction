@@ -3,6 +3,8 @@
 ## 📌 Project Overview
 This project predicts whether a passenger survived the Titanic disaster using Machine Learning.
 
+🔗 Live App:https://titanic-survival-prediction-gmvb8x6j7ismm35e8mgnzp.streamlit.app/
+
 ## 🛠️ Technologies Used
 - Python
 - Pandas, NumPy
