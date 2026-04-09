@@ -4,11 +4,12 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import os
 
 # ---------------- Page Config ----------------
 st.set_page_config(page_title="Titanic AI Predictor", page_icon="🚢", layout="wide")
 
-# ---------------- Background Image + Dark Overlay ----------------
+# ---------------- Background ----------------
 st.markdown("""
 <style>
 .stApp {
@@ -23,8 +24,18 @@ h1, h2, h3 {
 </style>
 """, unsafe_allow_html=True)
 
+# ---------------- PATH FIX (IMPORTANT) ----------------
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+model_path = os.path.join(BASE_DIR, 'models', 'titanic_model.pkl')
+data_path = os.path.join(BASE_DIR, 'data', 'titanic.csv')
+
 # ---------------- Load Model ----------------
-model = joblib.load('/models/titanic_model.pkl')
+if not os.path.exists(model_path):
+    st.error(f"Model file not found at: {model_path}")
+    st.stop()
+
+model = joblib.load(model_path)
 
 # ---------------- Title ----------------
 st.markdown("<h1 style='text-align:center;'>🚢 Titanic Survival AI Predictor</h1>", unsafe_allow_html=True)
@@ -46,7 +57,7 @@ sex_val = 0 if sex == "Male" else 1
 if st.sidebar.button("🔍 Predict"):
 
     data = np.array([[pclass, sex_val, age, sibsp, parch, fare]])
-    
+
     prediction = model.predict(data)
     prob = model.predict_proba(data)[0][1] * 100
 
@@ -62,7 +73,11 @@ if st.sidebar.button("🔍 Predict"):
 st.write("---")
 st.write("## 📊 Titanic Data Insights")
 
-df = pd.read_csv('../data/titanic.csv')
+if not os.path.exists(data_path):
+    st.error(f"Data file not found at: {data_path}")
+    st.stop()
+
+df = pd.read_csv(data_path)
 
 col1, col2 = st.columns(2)
 
